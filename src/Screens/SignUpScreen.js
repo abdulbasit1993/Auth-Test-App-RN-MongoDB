@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
   View,
@@ -10,6 +10,26 @@ import {
 import {Button, TextInput} from 'react-native-paper';
 
 const SignUpScreen = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  sendCredentials = () => {
+    fetch('http://172.16.203.168:3000/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      });
+  };
+
   return (
     <>
       <KeyboardAvoidingView behavior="position">
@@ -47,19 +67,24 @@ const SignUpScreen = ({navigation}) => {
         <TextInput
           label="Email"
           mode="outlined"
+          value={email}
           style={{marginLeft: 18, marginRight: 18, marginTop: 18}}
           theme={{colors: {primary: 'blue'}}}
+          onChangeText={text => setEmail(text)}
         />
         <TextInput
           label="Password"
           mode="outlined"
+          secureTextEntry={true}
+          value={password}
           style={{marginLeft: 18, marginRight: 18, marginTop: 18}}
           theme={{colors: {primary: 'blue'}}}
+          onChangeText={text => setPassword(text)}
         />
         <Button
           style={{marginLeft: 18, marginRight: 18, marginTop: 18}}
           mode="contained"
-          onPress={() => console.log('Pressed')}>
+          onPress={() => sendCredentials()}>
           Sign Up
         </Button>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>

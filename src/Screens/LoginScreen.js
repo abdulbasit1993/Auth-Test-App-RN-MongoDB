@@ -60,7 +60,7 @@ const LoginScreen = ({navigation}) => {
           style={{marginLeft: 18, marginRight: 18, marginTop: 18}}
           mode="contained"
           onPress={() => console.log('Pressed')}>
-          Sign In
+          Login
         </Button>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
           <Text
