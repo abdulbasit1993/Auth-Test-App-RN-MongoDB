@@ -8,13 +8,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   sendCredentials = () => {
-    fetch('http://172.16.203.168:3000/signup', {
+    fetch('http://172.16.202.60:3000/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,8 +26,12 @@ const SignUpScreen = ({navigation}) => {
       }),
     })
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
+      .then(async data => {
+        try {
+          await AsyncStorage.setItem('token', data.token);
+        } catch (e) {
+          console.log('An Error Occured: ', e);
+        }
       });
   };
 
