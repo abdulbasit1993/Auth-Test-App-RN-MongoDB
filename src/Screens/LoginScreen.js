@@ -33,7 +33,7 @@ const LoginScreen = ({navigation}) => {
           navigation.replace('Home');
         } catch (e) {
           console.log('An Error Occured: ', e);
-          Alert(e);
+          Alert.alert('Error', e.message);
         }
       });
   };

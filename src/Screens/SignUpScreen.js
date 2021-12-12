@@ -6,6 +6,7 @@ import {
   StatusBar,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,9 +31,14 @@ const SignUpScreen = ({navigation}) => {
         try {
           await AsyncStorage.setItem('token', data.token);
           navigation.replace('Home');
-        } catch (e) {
-          console.log('An Error Occured: ', e);
+        } catch (error) {
+          console.log('An Error Occured: ', error);
+          Alert.alert('Error', error.message);
         }
+      })
+      .catch(e => {
+        console.log(e);
+        Alert.alert('Error', e.message);
       });
   };
 
