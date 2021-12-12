@@ -15,28 +15,26 @@ const Stack = createNativeStackNavigator();
 const App = () => {
   const [isLoggedIn, setLogged] = useState(null);
 
-  useEffect(async () => {
+  const detectLogin = async () => {
     const token = await AsyncStorage.getItem('token');
     if (token) {
       setLogged(true);
     } else {
       setLogged(false);
     }
+  };
+
+  useEffect(() => {
+    detectLogin();
   }, []);
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        {isLoggedIn == null ? (
-          <Stack.Screen name="Loading" component={LoadingScreen} />
-        ) : isLoggedIn == true ? (
-          <Stack.Screen name="Home" component={HomeScreen} />
-        ) : (
-          <>
-            <Stack.Screen name="Signup" component={SignUpScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-          </>
-        )}
+        <Stack.Screen name="Loading" component={LoadingScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Signup" component={SignUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

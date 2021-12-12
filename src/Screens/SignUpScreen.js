@@ -14,8 +14,8 @@ const SignUpScreen = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  sendCredentials = () => {
-    fetch('http://172.16.202.60:3000/signup', {
+  const sendCredentials = () => {
+    fetch('http://192.168.0.111:3000/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,6 +29,7 @@ const SignUpScreen = ({navigation}) => {
       .then(async data => {
         try {
           await AsyncStorage.setItem('token', data.token);
+          navigation.replace('Home');
         } catch (e) {
           console.log('An Error Occured: ', e);
         }
@@ -92,7 +93,7 @@ const SignUpScreen = ({navigation}) => {
           onPress={() => sendCredentials()}>
           Sign Up
         </Button>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={() => navigation.replace('Login')}>
           <Text
             style={{
               fontSize: 18,
